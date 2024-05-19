@@ -8,8 +8,15 @@ namespace CafeDuCoin.Models
     public class Game
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
         public bool IsAvailable { get; set; }
+        public List<Rental> Rentals { get; set; }
+
+        public Game()
+        {
+            IsAvailable = true;
+            Rentals = new List<Rental>();
+        }
     }
 }
