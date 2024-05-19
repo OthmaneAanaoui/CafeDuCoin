@@ -1,0 +1,6 @@
+@CafeDuCoin_HostAddress = http://localhost:5152
+
+GET {{CafeDuCoin_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
