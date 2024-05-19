@@ -1,0 +1,36 @@
+version: '3.4'
+
+services:
+  cafeducoin:
+    image: cafeducoin
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    environment:
+      - ConnectionStrings__DefaultConnection=User ID=postgres;Password=postgres;Server=db;Port=5432;Database=CafeDuCoinDB;IntegratedSecurity=true;Pooling=true;
+    networks:
+      - dev
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: CafeDuCoinDB
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - db:/var/lib/postgresql/data
+    networks:
+      - dev
+
+volumes:
+  db:
+
+networks:
+  dev:
