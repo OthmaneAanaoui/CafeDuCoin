@@ -11,7 +11,7 @@ services:
     depends_on:
       - db
     environment:
-      - ConnectionStrings__DefaultConnection=User ID=postgres;Password=postgres;Server=db;Port=5432;Database=CafeDuCoinDB;IntegratedSecurity=true;Pooling=true;
+      - ConnectionStrings__DefaultConnection=User ID=postgres;Password=postgres;Host=db;Port=5432;Database=CafeDuCoinDB;Pooling=true;
     networks:
       - dev
 
@@ -22,7 +22,7 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: CafeDuCoinDB
     ports:
-      - "5432:5432"
+      - "5433:5432"
     restart: always
     volumes:
       - db:/var/lib/postgresql/data
@@ -30,7 +30,7 @@ services:
       - dev
 
 volumes:
-  db:
+  db: 
 
 networks:
   dev:

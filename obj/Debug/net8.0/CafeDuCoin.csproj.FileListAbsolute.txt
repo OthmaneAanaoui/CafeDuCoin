@@ -104,3 +104,14 @@
 /Users/aanaouiothmane/Downloads/CafeDuCoin/obj/Debug/net8.0/CafeDuCoin.pdb
 /Users/aanaouiothmane/Downloads/CafeDuCoin/obj/Debug/net8.0/CafeDuCoin.genruntimeconfig.cache
 /Users/aanaouiothmane/Downloads/CafeDuCoin/obj/Debug/net8.0/ref/CafeDuCoin.dll
+/Users/aanaouiothmane/Downloads/CafeDuCoin/bin/Debug/net8.0/BCrypt.Net-Next.dll
+/Users/aanaouiothmane/Downloads/CafeDuCoin/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/aanaouiothmane/Downloads/CafeDuCoin/bin/Debug/net8.0/Microsoft.IdentityModel.Abstractions.dll
+/Users/aanaouiothmane/Downloads/CafeDuCoin/bin/Debug/net8.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/aanaouiothmane/Downloads/CafeDuCoin/bin/Debug/net8.0/Microsoft.IdentityModel.Logging.dll
+/Users/aanaouiothmane/Downloads/CafeDuCoin/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.dll
+/Users/aanaouiothmane/Downloads/CafeDuCoin/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/Users/aanaouiothmane/Downloads/CafeDuCoin/bin/Debug/net8.0/Microsoft.IdentityModel.Tokens.dll
+/Users/aanaouiothmane/Downloads/CafeDuCoin/bin/Debug/net8.0/System.IdentityModel.Tokens.Jwt.dll
+/Users/aanaouiothmane/Downloads/CafeDuCoin/bin/Debug/net8.0/AutoMapper.dll
+/Users/aanaouiothmane/Downloads/CafeDuCoin/bin/Debug/net8.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll

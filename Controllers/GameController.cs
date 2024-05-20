@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using AutoMapper;
 using CafeDuCoin.Data;
 using CafeDuCoin.Models;
-using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,93 +17,83 @@ namespace CafeDuCoin.Controllers
     public class GameController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public GameController(ApplicationDbContext context)
+        public GameController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-
-        // GET: api/Games
-        [HttpGet(Name = "GetAllGames")]
-        public async Task<ActionResult<IEnumerable<Game>>> GetGames()
+        [HttpGet("games")]
+        [Authorize]
+        public async Task<IActionResult> GetGames()
         {
-            return await _context.Games.ToListAsync();
+            var games = await _context.Games.ToListAsync();
+            var gameDtos = _mapper.Map<List<GameDto>>(games);
+            return Ok(gameDtos);
         }
 
-        // GET: api/Games/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Game>> GetGame(int id)
+        [HttpGet("games/{id}/history")]
+        [Authorize]
+        public async Task<IActionResult> GetGameHistory(int id)
         {
-            var game = await _context.Games.FindAsync(id);
+            var rentals = await _context.Rentals
+                .Where(r => r.GameId == id)
+                .Include(r => r.User)
+                .ToListAsync();
+            if (rentals == null) return NotFound();
 
-            if (game == null)
-            {
-                return NotFound();
-            }
-
-            return game;
+            var rentalDtos = _mapper.Map<List<RentalDto>>(rentals);
+            return Ok(rentalDtos);
         }
 
-        // POST: api/Games
-        [HttpPost]
-        public async Task<ActionResult<Game>> PostGame(Game game)
-        {
-            _context.Games.Add(game);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetGame", new { id = game.Id }, game);
-        }
-
-        // PUT: api/Games/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutGame(int id, Game game)
-        {
-            if (id != game.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(game).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!GameExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // DELETE: api/Games/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteGame(int id)
+        [HttpPost("games/{id}/rent")]
+        [Authorize]
+        public async Task<IActionResult> RentGame(int id)
         {
             var game = await _context.Games.FindAsync(id);
-            if (game == null)
+            if (game == null || !game.IsAvailable)
             {
-                return NotFound();
+                return BadRequest("Game is not available.");
             }
 
-            _context.Games.Remove(game);
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var rental = new Rental
+            {
+                GameId = id,
+                UserId = userId,
+                RentalDate = DateTime.Now
+            };
+
+            game.IsAvailable = false;
+            _context.Rentals.Add(rental);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok();
         }
 
-        private bool GameExists(int id)
+        [HttpPost("games/{id}/return")]
+        [Authorize]
+        public async Task<IActionResult> ReturnGame(int id)
         {
-            return _context.Games.Any(e => e.Id == id);
+            var rental = await _context.Rentals
+                .Where(r => r.GameId == id && r.ReturnDate == null)
+                .FirstOrDefaultAsync();
+
+            if (rental == null)
+            {
+                return BadRequest("No active rental found for this game.");
+            }
+
+            rental.ReturnDate = DateTime.Now;
+            var game = await _context.Games.FindAsync(id);
+            game.IsAvailable = true;
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
         }
     }
 
