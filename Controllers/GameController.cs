@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CafeDuCoin.Controllers
 {
-    [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class GameController : ControllerBase
     {
@@ -31,7 +31,15 @@ namespace CafeDuCoin.Controllers
         {
             var games = await _context.Games.ToListAsync();
             var gameDtos = _mapper.Map<List<GameDto>>(games);
-            return Ok(gameDtos);
+
+            if (gameDtos != null && gameDtos.Any())
+            {
+                return Ok(gameDtos);
+            }
+            else
+            {
+                return NoContent(); // or return an appropriate response indicating no games found
+            }
         }
 
         [HttpGet("games/{id}/history")]
@@ -42,6 +50,7 @@ namespace CafeDuCoin.Controllers
                 .Where(r => r.GameId == id)
                 .Include(r => r.User)
                 .ToListAsync();
+
             if (rentals == null) return NotFound();
 
             var rentalDtos = _mapper.Map<List<RentalDto>>(rentals);
@@ -58,7 +67,7 @@ namespace CafeDuCoin.Controllers
                 return BadRequest("Game is not available.");
             }
 
-            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
             var rental = new Rental
             {
@@ -90,13 +99,9 @@ namespace CafeDuCoin.Controllers
             rental.ReturnDate = DateTime.Now;
             var game = await _context.Games.FindAsync(id);
             game.IsAvailable = true;
-
             await _context.SaveChangesAsync();
 
             return Ok();
         }
     }
-
-
-
 }

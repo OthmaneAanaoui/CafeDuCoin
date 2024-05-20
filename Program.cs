@@ -4,13 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using AutoMapper;
-using CafeDuCoin.Mappings; // Assurez-vous que ce namespace correspond à votre projet
+using CafeDuCoin.Mappings; // Ensure that this namespace matches your project
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -22,11 +23,13 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 // JWT Authentication configuration
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var key = jwtSettings.GetValue<string>("Secret");
+
 if (string.IsNullOrEmpty(key))
 {
     throw new ArgumentNullException(nameof(key), "JWT Secret is not configured");
 }
-var keyBytes = Encoding.ASCII.GetBytes(key);
+
+var keyBytes = Encoding.UTF8.GetBytes(key);
 
 builder.Services.AddAuthentication(options =>
 {
@@ -57,10 +60,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

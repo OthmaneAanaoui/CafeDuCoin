@@ -50,7 +50,9 @@ namespace CafeDuCoin.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login(UserDto request)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(u => u.Email == request.Email);
+            var user = await _context.Users
+                .SingleOrDefaultAsync(u => u.Email == request.Email );
+
             if (user == null)
             {
                 return BadRequest("User not found.");
@@ -75,7 +77,6 @@ namespace CafeDuCoin.Controllers
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSettings:Secret"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
             var token = new JwtSecurityToken(
                 issuer: _configuration["JwtSettings:Issuer"],
                 audience: _configuration["JwtSettings:Audience"],
