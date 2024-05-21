@@ -25,6 +25,7 @@ namespace CafeDuCoin.Controllers
             _configuration = configuration;
         }
 
+        // Enregistrement d'un nouvel utilisateur
         [HttpPost("register")]
         public async Task<ActionResult<User>> Register(UserDto request)
         {
@@ -48,6 +49,7 @@ namespace CafeDuCoin.Controllers
             return Ok(user);
         }
 
+        // Connexion de l'utilisateur
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login(UserDto request)
         {
@@ -68,6 +70,7 @@ namespace CafeDuCoin.Controllers
             return Ok(new { token });
         }
 
+        // Création du token JWT pour l'utilisateur
         private string CreateToken(User user)
         {
             var claims = new[]

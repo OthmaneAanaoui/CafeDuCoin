@@ -25,6 +25,7 @@ namespace CafeDuCoin.Controllers
             _mapper = mapper;
         }
 
+        // Récupérer la liste de tous les jeux
         [HttpGet("games")]
         [Authorize]
         public async Task<IActionResult> GetGames()
@@ -42,6 +43,7 @@ namespace CafeDuCoin.Controllers
             }
         }
 
+        // Récupérer l'historique de location d'un jeu spécifique
         [HttpGet("games/{id}/history")]
         [Authorize]
         public async Task<IActionResult> GetGameHistory(int id)
@@ -58,6 +60,7 @@ namespace CafeDuCoin.Controllers
             return Ok(rentalDtos);
         }
 
+        // Lister tous les jeux loués par l'utilisateur connecté
         [HttpGet("games/rented")]
         [Authorize]
         public async Task<IActionResult> GetGamesRentedByUser()
@@ -75,6 +78,7 @@ namespace CafeDuCoin.Controllers
             return Ok(rentalDtos);
         }
 
+        // Louer un jeu spécifique
         [HttpPost("games/{id}/rent")]
         [Authorize]
         public async Task<IActionResult> RentGame(int id)
@@ -101,6 +105,7 @@ namespace CafeDuCoin.Controllers
             return Ok();
         }
 
+        // Retourner un jeu loué
         [HttpPost("games/{id}/return")]
         [Authorize]
         public async Task<IActionResult> ReturnGame(int id)

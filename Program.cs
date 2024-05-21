@@ -8,7 +8,7 @@ using CafeDuCoin.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+// Ajout des services nécessaires
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -17,7 +17,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
-// Configure CORS
+// Configuration CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp",
@@ -29,6 +29,7 @@ builder.Services.AddCors(options =>
         });
 });
 
+// Configuration de l'authentification JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -46,7 +47,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configuration du pipeline de requêtes HTTP
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -58,7 +59,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Use the CORS policy
+// Utilisation de la politique CORS
 app.UseCors("AllowReactApp");
 
 app.MapControllers();
