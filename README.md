@@ -59,13 +59,14 @@ npm start
 
 - Ouvrir l'application dans votre navigateur : http://localhost:3000
 
-## Points d'accès API
-
-- `GET /api/games` : Récupérer la liste de tous les jeux.
-- `GET /api/games/{id}/history` : Récupérer l'historique de location d'un jeu spécifique.
-- `POST /api/games/{id}/rent` : Louer un jeu spécifique.
-- `POST /api/games/{id}/return` : Retourner un jeu loué.
-- `GET /api/games/rented` : Lister tous les jeux loués par l'utilisateur connecté.
+## Points d'accès API 
+- `POST /api/Auth/register` : s'enregistrer.
+- `POST /api/Auth/login` : se connecter.
+- `GET /api/Game/games` : Récupérer la liste de tous les jeux.
+- `GET /api/Game/games/{id}/history` : Récupérer l'historique de location d'un jeu spécifique.
+- `POST /api/Game/games/{id}/rent` : Louer un jeu spécifique.
+- `POST /api/Game/games/{id}/return` : Retourner un jeu loué.
+- `GET /api/Game/games/rented` : Lister tous les jeux loués par l'utilisateur connecté.
 
 ## Configuration Docker
 
