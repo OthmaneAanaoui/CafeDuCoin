@@ -1,19 +1,6 @@
-# CafeDuCoin
+ # CafeDuCoin
 
-CafeDuCoin est une application web pour la location de jeux dans un café local. L'application se compose d'un webapi .NET et d'un frontend React, permettant aux utilisateurs de consulter les jeux disponibles, de les louer et de les retourner.
-
-## Table des matières
-
-- [Aperçu du projet](#aperçu-du-projet)
-- [Fonctionnalités](#fonctionnalités)
-- [Stack technologique](#stack-technologique)
-- [Prérequis](#prérequis)
-- [Installation](#installation)
-- [Exécution du projet](#exécution-du-projet)
-- [Points d'accès API](#points-daccès-api)
-- [Configuration Docker](#configuration-docker)
-- [Contribuer](#contribuer)
-- [Licence](#licence)
+CafeDuCoin est une application web pour la location de jeux dans un café local. L'application se compose d'un backend Web API .NET et d'un frontend React, permettant aux utilisateurs de consulter les jeux disponibles, de les louer et de les retourner.
 
 ## Aperçu du projet
 
@@ -29,9 +16,9 @@ CafeDuCoin est un service de location de jeux conçu pour être utilisé dans un
 
 ## Stack technologique
 
-- **CafeDuCoin webapi**: .NET Core 8.0, Entity Framework Core, PostgreSQL
-- **CafeDuCoin frontend**: React, Material-UI
-- **Autres outils**: AutoMapper, JWT pour l'authentification, Docker
+- **Backend Web API** : .NET Core 8.0, Entity Framework Core, PostgreSQL
+- **Frontend** : React, Material-UI
+- **Autres outils** : AutoMapper, JWT pour l'authentification, Docker
 
 ## Prérequis
 
@@ -42,8 +29,65 @@ CafeDuCoin est un service de location de jeux conçu pour être utilisé dans un
 
 ## Installation
 
-1. Cloner le dépôt :
+1. **Cloner le dépôt :**
 
 ```bash
 git clone https://github.com/OthmaneAanaoui/CafeDuCoin.git
 cd cafeducoin
+```
+
+## Configuration du Web API :
+
+```bash
+dotnet restore
+```
+
+- Mettre à jour `appsettings.json` avec votre chaîne de connexion PostgreSQL.
+
+```bash
+dotnet ef database update
+dotnet run
+```
+
+## Configuration du frontend :
+
+```bash
+cd frontend
+npm install
+npm start
+```
+
+- Ouvrir l'application dans votre navigateur : http://localhost:3000
+
+## Points d'accès API
+
+- `GET /api/games` : Récupérer la liste de tous les jeux.
+- `GET /api/games/{id}/history` : Récupérer l'historique de location d'un jeu spécifique.
+- `POST /api/games/{id}/rent` : Louer un jeu spécifique.
+- `POST /api/games/{id}/return` : Retourner un jeu loué.
+- `GET /api/games/rented` : Lister tous les jeux loués par l'utilisateur connecté.
+
+## Configuration Docker
+
+### Construction et exécution avec Docker
+
+```bash
+docker build -t cafeducoin .
+docker run -d -p 80:80 --name cafeducoin_container cafeducoin
+```
+
+### Vue d'ensemble du Dockerfile
+
+Le Dockerfile est configuré pour gérer à la fois les builds backend et frontend :
+
+- **Étape 1** : Construire le frontend avec Node.js.
+- **Étape 2** : Construire le backend avec le SDK .NET.
+- **Étape 3** : Combinaison du backend et du frontend, en copiant la build frontend dans le répertoire `wwwroot` du backend.
+
+## Contribuer
+
+Les contributions sont les bienvenues ! Veuillez créer une issue ou soumettre une pull request pour toute modification.
+
+## Licence
+
+Ce projet est sous licence MIT.
