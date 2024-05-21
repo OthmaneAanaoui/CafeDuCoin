@@ -12,9 +12,12 @@ namespace CafeDuCoin.Mappings
     {
         public MappingProfile()
         {
+            CreateMap<Rental, RentalDto>()
+            .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.User))
+            .ForMember(dest => dest.Game, opt => opt.MapFrom(src => src.Game));
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<Game, GameDto>().ReverseMap();
-            CreateMap<Rental, RentalDto>().ReverseMap();
+            
         }
     }
 }

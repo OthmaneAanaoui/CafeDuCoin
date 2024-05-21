@@ -1,0 +1,17 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "ConnectionStrings": {
+    "DefaultConnection": "Host=localhost;Port=5432;Database=CafeCoinDB;Username=postgres;Password=1Azerty!;"
+  },
+  "JwtSettings": {
+    "Secret": "eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTcxNjIyOTE1OSwiaWF0IjoxNzE2MjI5MTU5fQ.JKBDJyqty-OA1tubr0Vqm-vAiV4fU1bztBWqtAgxzjI",
+    "Issuer": "cafe-du-coin.com",
+    "Audience": "cafe-du-coin-app.com"
+  }
+}

@@ -37,6 +37,7 @@ namespace CafeDuCoin.Controllers
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
             var user = new User
             {
+                Name = request.Name,
                 Email = request.Email,
                 Password = passwordHash
             };

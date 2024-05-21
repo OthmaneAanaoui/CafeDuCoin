@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CafeDuCoin")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6ca1a5e202b028ba93d04365d49992f73a1ddff0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3deb9afbbc01cad96f1f2c4ac917ac42126c978e")]
 [assembly: System.Reflection.AssemblyProductAttribute("CafeDuCoin")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CafeDuCoin")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -38,7 +38,7 @@ namespace CafeDuCoin.Controllers
             }
             else
             {
-                return NoContent(); // or return an appropriate response indicating no games found
+                return NoContent(); 
             }
         }
 
@@ -49,9 +49,27 @@ namespace CafeDuCoin.Controllers
             var rentals = await _context.Rentals
                 .Where(r => r.GameId == id)
                 .Include(r => r.User)
+                .Include(r => r.Game)
                 .ToListAsync();
 
-            if (rentals == null) return NotFound();
+            if (rentals == null || rentals.Count == 0) return NotFound();
+
+            var rentalDtos = _mapper.Map<List<RentalDto>>(rentals);
+            return Ok(rentalDtos);
+        }
+
+        [HttpGet("games/rented")]
+        [Authorize]
+        public async Task<IActionResult> GetGamesRentedByUser()
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            var rentals = await _context.Rentals
+                .Where(r => r.UserId == userId)
+                .Include(r => r.Game)
+                .ToListAsync();
+
+            if (rentals == null || rentals.Count == 0) return NotFound();
 
             var rentalDtos = _mapper.Map<List<RentalDto>>(rentals);
             return Ok(rentalDtos);
@@ -73,7 +91,7 @@ namespace CafeDuCoin.Controllers
             {
                 GameId = id,
                 UserId = userId,
-                RentalDate = DateTime.Now
+                RentalDate = DateTime.UtcNow
             };
 
             game.IsAvailable = false;
@@ -96,7 +114,7 @@ namespace CafeDuCoin.Controllers
                 return BadRequest("No active rental found for this game.");
             }
 
-            rental.ReturnDate = DateTime.Now;
+            rental.ReturnDate =  DateTime.UtcNow;
             var game = await _context.Games.FindAsync(id);
             game.IsAvailable = true;
             await _context.SaveChangesAsync();

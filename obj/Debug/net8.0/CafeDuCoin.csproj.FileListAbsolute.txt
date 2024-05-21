@@ -115,3 +115,7 @@
 /Users/aanaouiothmane/Downloads/CafeDuCoin/bin/Debug/net8.0/System.IdentityModel.Tokens.Jwt.dll
 /Users/aanaouiothmane/Downloads/CafeDuCoin/bin/Debug/net8.0/AutoMapper.dll
 /Users/aanaouiothmane/Downloads/CafeDuCoin/bin/Debug/net8.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+/Users/aanaouiothmane/Downloads/CafeDuCoin/bin/Debug/net8.0/frontend/package-lock.json
+/Users/aanaouiothmane/Downloads/CafeDuCoin/bin/Debug/net8.0/frontend/package.json
+/Users/aanaouiothmane/Downloads/CafeDuCoin/bin/Debug/net8.0/frontend/public/manifest.json
+/Users/aanaouiothmane/Downloads/CafeDuCoin/bin/Debug/net8.0/exeample.appsettings.json

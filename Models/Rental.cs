@@ -14,10 +14,6 @@ namespace CafeDuCoin.Models
         public User User { get; set; }
         public DateTime RentalDate { get; set; }
         public DateTime? ReturnDate { get; set; }
-        public Rental()
-        {
-            Game = new Game();
-            User = new User();
-        }
+        
     }
 }

@@ -10,6 +10,9 @@ namespace CafeDuCoin.Models
         public int Id { get; set; }
         public int GameId { get; set; }
         public int UserId { get; set; }
+        public UserDto User { get; set; }
+        public GameDto Game { get; set; }
+
         public DateTime RentalDate { get; set; }
         public DateTime? ReturnDate { get; set; }
     }
