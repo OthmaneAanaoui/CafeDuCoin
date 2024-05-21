@@ -26,7 +26,7 @@ import { BsPencilSquare } from "react-icons/bs";
 
 const Home = () => {
   const [games, setGames] = useState([]);
-  const [state, setState] = useState(true);
+  const [state, setState] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
